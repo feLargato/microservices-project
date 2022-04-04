@@ -6,7 +6,7 @@ export async function createMockedData() {
         force: true
     });
 
-    const mockedPassword = await bcrypt.hash("qwerty", 10);
+    let mockedPassword = await bcrypt.hash("qwerty", 10);
 
     let firstUser = await User.create({
         name: "fernando",
