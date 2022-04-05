@@ -1,8 +1,10 @@
 import express from "express";
 import * as db from './src/config/db/mockedData.js';
 import userRoutes from "./src/modules/user/routes/UserRoutes.js"
-
 const app = express();
+
+app.use(express.json());
+db.createMockedData();
 
 app.get("/auth", (req, res) => {
     return res.status(200).json({
@@ -11,10 +13,6 @@ app.get("/auth", (req, res) => {
       httpStatus: 200,
    });
 });
-
-app.use(express.json());
-
-db.createMockedData();
 
 app.use(userRoutes);
 

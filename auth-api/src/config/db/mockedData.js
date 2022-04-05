@@ -8,9 +8,15 @@ export async function createMockedData() {
 
     let mockedPassword = await bcrypt.hash("qwerty", 10);
 
-    let firstUser = await User.create({
+    await User.create({
         name: "fernando",
-        email: "emaildoFernando@gmail.com",
+        email: "fernando@gmail.com",
+        password: mockedPassword, 
+    });
+
+    User.create({
+        name: "carla",
+        email: "carla@gmail.com",
         password: mockedPassword, 
     });
 

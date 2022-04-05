@@ -36,9 +36,11 @@ class UserService {
     async findByEmail(req) {
         try {
             const { email } = req.params;
+            let { authenticatedUser } = req;
             UserValidations.validateEmail(email);
             let user = await UserRepository.findByEmail(email);
             UserValidations.validateUserNotFound(user);
+            UserValidations.validateUserLoggedIn(user, authenticatedUser);
             return {
                 status: httpStatus.OK,
                 user: {
