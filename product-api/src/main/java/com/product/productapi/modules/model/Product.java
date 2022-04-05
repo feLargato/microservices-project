@@ -1,4 +1,4 @@
-package com.product.productapi.modules.product.model;
+package com.product.productapi.modules.model;
 
 import lombok.*;
 

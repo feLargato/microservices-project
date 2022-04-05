@@ -1,4 +1,4 @@
-package com.product.productapi.controllers;
+package com.product.productapi.modules.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
