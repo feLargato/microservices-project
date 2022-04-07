@@ -1,4 +1,4 @@
-package com.product.productapi.modules.requests;
+package com.product.productapi.modules.product.dto;
 
 import lombok.Data;
 

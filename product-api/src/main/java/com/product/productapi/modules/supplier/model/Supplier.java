@@ -1,8 +1,9 @@
-package com.product.productapi.modules.model;
+package com.product.productapi.modules.supplier.model;
 
-import com.product.productapi.modules.requests.CategoryRequest;
-import com.product.productapi.modules.requests.SupplierRequest;
-import lombok.*;
+import com.product.productapi.modules.supplier.dto.SupplierRequest;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
 import javax.persistence.*;

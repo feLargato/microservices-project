@@ -1,9 +1,9 @@
 package com.product.productapi.config.validations;
 
 import com.product.productapi.config.exceptions.ValidationException;
-import com.product.productapi.modules.requests.CategoryRequest;
-import com.product.productapi.modules.requests.ProductRequest;
-import com.product.productapi.modules.requests.SupplierRequest;
+import com.product.productapi.modules.category.dto.CategoryRequest;
+import com.product.productapi.modules.product.dto.ProductRequest;
+import com.product.productapi.modules.supplier.dto.SupplierRequest;
 import org.springframework.stereotype.Component;
 
 

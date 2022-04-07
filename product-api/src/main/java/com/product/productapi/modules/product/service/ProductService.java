@@ -1,37 +1,51 @@
-package com.product.productapi.modules.service;
+package com.product.productapi.modules.product.service;
 
+import com.product.productapi.config.exceptions.ValidationException;
+import com.product.productapi.config.responses.Response;
 import com.product.productapi.config.validations.Validations;
-import com.product.productapi.modules.model.Product;
-import com.product.productapi.modules.repository.ProductRepository;
-import com.product.productapi.modules.requests.ProductRequest;
-import com.product.productapi.modules.responses.ProductResponse;
+import com.product.productapi.modules.product.model.Product;
+import com.product.productapi.modules.product.repository.ProductRepository;
+import com.product.productapi.modules.product.dto.ProductRequest;
+import com.product.productapi.modules.product.dto.ProductResponse;
+import com.product.productapi.modules.category.service.CategoryService;
+import com.product.productapi.modules.supplier.service.SupplierService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static org.springframework.util.ObjectUtils.isEmpty;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
 
+    @Autowired
     private ProductRepository productRepository;
+    @Autowired
     private CategoryService categoryService;
+    @Autowired
     private SupplierService supplierService;
+    @Autowired
     private Validations validations;
-
-
-    public ProductService(ProductRepository productRepository, SupplierService supplierService, CategoryService categoryService, Validations validations) {
-        this.productRepository = productRepository;
-        this.supplierService = supplierService;
-        this.categoryService = categoryService;
-        this.validations = validations;
-    }
-
 
     public ProductResponse save(ProductRequest productRequest) {
         validations.validateProduct(productRequest);
         var category = categoryService.findById(productRequest.getCategoryId());
         var supplier = supplierService.findById(productRequest.getSupplierId());
         var product = productRepository.save(Product.of(productRequest, category, supplier));
+        return ProductResponse.of(product);
+    }
+
+    public ProductResponse update(ProductRequest productRequest, Integer id) {
+        if(isEmpty(id)) {
+            throw new ValidationException("Product id must be informed");
+        }
+        validations.validateProduct(productRequest);
+        var category = categoryService.findById(productRequest.getCategoryId());
+        var supplier = supplierService.findById(productRequest.getSupplierId());
+        var product = Product.of(productRequest, category, supplier);
+        product.setId(id);
+        productRepository.save(product);
         return ProductResponse.of(product);
     }
 
@@ -75,6 +89,17 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
+    public Response delete(Integer id) {
+        productRepository.deleteById(id);
+        return Response.successResponse("Product deleted");
+    }
 
+    public boolean existsByCategoryId(Integer categoryId) {
+        return productRepository.existsByCategoryId(categoryId);
+    }
+
+    public boolean existsBySupplierId(Integer supplierId) {
+        return productRepository.existsBySupplierId(supplierId);
+    }
 
 }

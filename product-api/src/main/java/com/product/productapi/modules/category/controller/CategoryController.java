@@ -1,8 +1,10 @@
-package com.product.productapi.modules.controllers;
+package com.product.productapi.modules.category.controller;
 
-import com.product.productapi.modules.requests.CategoryRequest;
-import com.product.productapi.modules.responses.CategoryResponse;
-import com.product.productapi.modules.service.CategoryService;
+import com.product.productapi.config.responses.Response;
+import com.product.productapi.modules.category.dto.CategoryRequest;
+import com.product.productapi.modules.category.dto.CategoryResponse;
+import com.product.productapi.modules.category.service.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,11 +13,8 @@ import java.util.List;
 @RequestMapping("/product-api/category")
 public class CategoryController {
 
+    @Autowired
     private CategoryService categoryService;
-
-    public CategoryController(CategoryService categoryService) {
-        this.categoryService = categoryService;
-    }
 
 
     @PostMapping
@@ -38,5 +37,17 @@ public class CategoryController {
     public List<CategoryResponse> findByDesc(@PathVariable String desc) {
         return categoryService.findByDesc(desc);
     }
+
+    @DeleteMapping("{id}")
+    public Response delete(@PathVariable Integer id){
+        return categoryService.delete(id);
+
+    }
+
+    @PutMapping("{id}")
+    public CategoryResponse update(@RequestBody CategoryRequest request, @PathVariable Integer id) {
+        return categoryService.update(request, id);
+    }
+
 
 }

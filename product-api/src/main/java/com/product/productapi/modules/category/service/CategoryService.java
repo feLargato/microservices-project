@@ -1,11 +1,16 @@
-package com.product.productapi.modules.service;
+package com.product.productapi.modules.category.service;
+
+
 
 import com.product.productapi.config.exceptions.ValidationException;
+import com.product.productapi.config.responses.Response;
 import com.product.productapi.config.validations.Validations;
-import com.product.productapi.modules.model.Category;
-import com.product.productapi.modules.repository.CategoryRepository;
-import com.product.productapi.modules.requests.CategoryRequest;
-import com.product.productapi.modules.responses.CategoryResponse;
+import com.product.productapi.modules.category.dto.CategoryRequest;
+import com.product.productapi.modules.category.dto.CategoryResponse;
+import com.product.productapi.modules.category.model.Category;
+import com.product.productapi.modules.category.repository.CategoryRepository;
+import com.product.productapi.modules.product.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,18 +19,25 @@ import java.util.stream.Collectors;
 @Service
 public class CategoryService {
 
+    @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
     private Validations validations;
-
-    public CategoryService(CategoryRepository categoryRepository, Validations validations) {
-        this.categoryRepository = categoryRepository;
-        this.validations = validations;
-    }
+    @Autowired
+    private ProductService productService;
 
     public CategoryResponse save(CategoryRequest categoryRequest) {
         validations.validateCategory(categoryRequest);
         Category savedCategory = categoryRepository.save(Category.of(categoryRequest));
         return CategoryResponse.of(savedCategory);
+    }
+
+    public CategoryResponse update(CategoryRequest categoryRequest, Integer id) {
+        validations.validateCategory(categoryRequest);
+        var category = Category.of(categoryRequest);
+        category.setId(id);
+        categoryRepository.save(category);
+        return CategoryResponse.of(category);
     }
 
     public Category findById(Integer id) {
@@ -52,6 +64,15 @@ public class CategoryService {
                 .stream()
                 .map(CategoryResponse::of)
                 .collect(Collectors.toList());
+    }
+
+    public Response delete(Integer id) {
+        if(productService.existsByCategoryId(id)) {
+            throw new ValidationException("You cannot delete this category because it has a product attached to it");
+        }
+        categoryRepository.deleteById(id);
+        return Response.successResponse("Category deleted, category's id: " + id);
+
     }
 
 }

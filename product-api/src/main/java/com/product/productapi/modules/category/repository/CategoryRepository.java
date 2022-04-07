@@ -1,6 +1,6 @@
-package com.product.productapi.modules.repository;
+package com.product.productapi.modules.category.repository;
 
-import com.product.productapi.modules.model.Category;
+import com.product.productapi.modules.category.model.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,6 +1,7 @@
-package com.product.productapi.modules.responses;
+package com.product.productapi.modules.supplier.dto;
 
-import com.product.productapi.modules.model.Supplier;
+
+import com.product.productapi.modules.supplier.model.Supplier;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 

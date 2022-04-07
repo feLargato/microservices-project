@@ -1,7 +1,12 @@
-package com.product.productapi.modules.model;
+package com.product.productapi.modules.product.model;
 
-import com.product.productapi.modules.requests.ProductRequest;
-import lombok.*;
+import com.product.productapi.modules.category.model.Category;
+import com.product.productapi.modules.product.dto.ProductRequest;
+import com.product.productapi.modules.supplier.model.Supplier;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

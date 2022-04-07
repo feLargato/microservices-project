@@ -1,8 +1,10 @@
-package com.product.productapi.modules.responses;
+package com.product.productapi.modules.product.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.product.productapi.modules.model.Product;
+import com.product.productapi.modules.category.dto.CategoryResponse;
+import com.product.productapi.modules.product.model.Product;
+import com.product.productapi.modules.supplier.dto.SupplierResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
