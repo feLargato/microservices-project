@@ -3,6 +3,7 @@ package com.product.productapi.modules.product.service;
 import com.product.productapi.config.exceptions.ValidationException;
 import com.product.productapi.config.responses.Response;
 import com.product.productapi.config.validations.Validations;
+import com.product.productapi.modules.product.dto.ProductStock;
 import com.product.productapi.modules.product.model.Product;
 import com.product.productapi.modules.product.repository.ProductRepository;
 import com.product.productapi.modules.product.dto.ProductRequest;
@@ -100,6 +101,10 @@ public class ProductService {
 
     public boolean existsBySupplierId(Integer supplierId) {
         return productRepository.existsBySupplierId(supplierId);
+    }
+
+    public void updateProductStock(ProductStock productStock) {
+
     }
 
 }
