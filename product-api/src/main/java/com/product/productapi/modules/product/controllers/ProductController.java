@@ -2,8 +2,10 @@ package com.product.productapi.modules.product.controllers;
 
 
 import com.product.productapi.config.responses.Response;
+import com.product.productapi.modules.product.dto.ProductCheckStockRequest;
 import com.product.productapi.modules.product.dto.ProductRequest;
 import com.product.productapi.modules.product.dto.ProductResponse;
+import com.product.productapi.modules.product.dto.ProductSalesResponse;
 import com.product.productapi.modules.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -60,5 +62,14 @@ public class ProductController {
         return productService.update(request, id);
     }
 
+    @GetMapping("sales/{id}")
+    public ProductSalesResponse getProductSales(@PathVariable Integer id) {
+        return productService.getProductSales(id);
+    }
+
+    @PostMapping("check-stock")
+    public Response checkProductStock(@RequestBody ProductCheckStockRequest checkProduct) {
+        return productService.checkProductStock(checkProduct);
+    }
 
 }
