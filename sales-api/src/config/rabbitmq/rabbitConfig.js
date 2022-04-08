@@ -12,22 +12,12 @@ import { ListenSalesconfirmationQueue } from "../../modules/sales/rabbitMq/Sales
 const CONTAINER_ENV = "container"
 
 export async function connectMq() {
-    const env = process.env.NODE_ENV;
-    
-    if(CONTAINER_ENV == env){
-        console.info("Waiting RabbitMq to start")
-        setInterval(() => {
-            connectRabbitMqAndCreateQueues();
-        }, 30000)
-    }
-    else {
-        connectRabbitMqAndCreateQueues();
-    }
+    connectRabbitMqAndCreateQueues();
 }
     
 
     function connectRabbitMqAndCreateQueues() {
-        amqp.connect(RABBIT_MQ_URL, (error, connection) => {
+        amqp.connect(RABBIT_MQ_URL, {timeout: 180000}, (error, connection) => {
             if(error) {
                 throw error;
             }

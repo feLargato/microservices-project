@@ -8,7 +8,7 @@ class UserRepository {
                 where: { email }
             });
         } catch (err) {
-            console.err(err.message);
+            console.error(err.message);
             return null;
         }
     }
@@ -19,7 +19,7 @@ class UserRepository {
                 where: {id}
             });
         } catch (err) {
-            console.err(err.message);
+            console.error(err.message);
             return null;
         }
     }

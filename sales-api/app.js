@@ -9,39 +9,36 @@ import salesRoutes from "./src/modules/sales/routes/SaleRoutes.js";
 const app = express();
 const env = process.env;
 const PORT = env.PORT || 8082;
+const CONTAINER_ENV = "container";
 
-connectDb();
-//createMockedData();
-connectMq();
+startApplication();
+
+async function startApplication() {
+    if(CONTAINER_ENV === env.NODE_ENV) {
+        console.info("witing creation of rabbitMq and mongoDb containers");
+        setInterval(() => {
+            connectDb();
+            connectMq();
+        }, 180000);
+    }
+    else{
+        connectDb;
+        createMockedData();
+        connectMq();
+
+    }
+}
+
+app.get("/sales-api/createmock", (req, res) => {
+    createMockedData();
+    return res.json({message: "created data"})
+});
 
 app.use(express.json());
 app.use(checkToken);
-
 app.use(salesRoutes);
-app.get("/test", (req, res) => {
-    try {
-        sendMessageToProductStockUpdateQueue([
-            {
-                productId: 100,
-                quantity: 2
-            },
-            {
-                productId: 200,
-                quantity: 2
-            },
-            {
-                productId: 300,
-                quantity: 2
-            }
-        ]);
-        return res.status(200).json({
-            status: 200
-        });
-    } catch (error) {
-        console.log(error)
-    }
 
-})
+
 app.get("/sales-api", (req, res) => {
         return res.status(200).json({
         service: "sales-api",
@@ -51,5 +48,5 @@ app.get("/sales-api", (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.info("Server is up on port 8082");
+    console.info(`Server started at port ${PORT}`);
 })

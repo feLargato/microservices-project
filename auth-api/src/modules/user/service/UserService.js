@@ -1,4 +1,4 @@
-import UserRepository from "../repository/userRepository.js";
+import UserRepository from "../repository/UserRepository.js";
 import jwt from "jsonwebtoken";
 import * as httpStatus from "../../../config/utils/HttpStatus.js"
 import * as secret from "../../../config/utils/secrets.js";
@@ -16,7 +16,7 @@ class UserService {
             let authenticatedUser = {id: user.id, name: user.name, email: user.email}
             const accesccToken = jwt.sign(
                 {authenticatedUser},
-                secret.apiSecrect,
+                secret.API_SECRET,
                 {expiresIn: '1d'}
             );
             return {

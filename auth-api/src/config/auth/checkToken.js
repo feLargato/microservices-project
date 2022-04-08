@@ -20,7 +20,7 @@ export default async (req, res, next) => {
 
         const decoded = await promisify(jwt.verify)(
             accessToken,
-            secrets.apiSecrect
+            secrets.API_SECRET
         );
         req.authenticatedUser = decoded.authenticatedUser;
         return next();
