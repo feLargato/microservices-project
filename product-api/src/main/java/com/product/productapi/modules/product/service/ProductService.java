@@ -169,7 +169,7 @@ public class ProductService {
             return ProductSalesResponse.of(product, sales.getSalesId());
         }
         catch (Exception e) {
-            throw new ValidationException("An error occurred while getting product's sales");
+            throw new ValidationException(String.format("An error occurred while getting product's sales. Error: %s", e.getMessage()));
         }
     }
 

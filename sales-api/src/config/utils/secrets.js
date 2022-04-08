@@ -9,3 +9,6 @@ export const apiSecrect = env.API_SECRET
 
  export const RABBIT_MQ_URL = env.RABBIT_MQ_URL
  ? env.RABBIT_MQ_URL : "amqp://localhost:5672";
+
+ export const PRODUCT_API_URL = env.PRODUCT_API_URL 
+ ? PRODUCT_API_URL : "http://localhost:8081/product-api"

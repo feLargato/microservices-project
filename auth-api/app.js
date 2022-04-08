@@ -2,6 +2,8 @@ import express from "express";
 import * as db from './src/config/db/mockedData.js';
 import userRoutes from "./src/modules/user/routes/UserRoutes.js"
 const app = express();
+const env = process.env;
+const PORT = env.PORT || 8080;
 
 app.use(express.json());
 db.createMockedData();
@@ -16,6 +18,6 @@ app.get("/auth", (req, res) => {
 
 app.use(userRoutes);
 
-app.listen(8080, () => {
+app.listen(PORT, () => {
     console.info('Server started at port 8080')
 });
