@@ -6,10 +6,29 @@ import checkToken from './src/config/auth/checkToken.js'
 import { connectMq } from './src/config/rabbitmq/rabbitConfig.js'
 import { sendMessageToProductStockUpdateQueue } from './src/modules/products/rabbitMq/ProductStockUpdateSender.js';
 import salesRoutes from "./src/modules/sales/routes/SaleRoutes.js";
+import swaggerJsDoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
 const app = express();
 const env = process.env;
 const PORT = env.PORT || 8082;
 const CONTAINER_ENV = "container";
+
+const swaggerOptions = {
+    swaggerDefinition: {
+        info: {
+            title: 'sales-api',
+            description: 'sales api',
+            contact: {
+                name: "lfrsantos05@gmail.com"
+            },
+            servers: ["http://localhost:8080"]
+        }
+    },
+    apis: ["app.js", "./src/modules/sales/routes/*.js"]
+}
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+
+app.use("/sales-api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
 startApplication();
 

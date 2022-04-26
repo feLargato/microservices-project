@@ -2,7 +2,7 @@ const env = process.env;
 
 
 export const MONGO_DB_URL = env.MONGO_DB_URL 
-? env.MONGO_DB_URL : "mongodb://admin:root@localhost:27017/admin";
+? env.MONGO_DB_URL : "mongodb://admin:root@localhost:27017/admin?ssl=true";
 
 export const apiSecrect = env.API_SECRET
  ? env.API_SECRET : "bWljcm9zc2Vydmljb3MtY29udGFpbmVyLXBhc3N3b3Jk";
