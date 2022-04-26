@@ -57,6 +57,25 @@ class UserService {
         }
     }
 
+    async create(req) {
+        try {
+            let user = await UserRepository.create(req.body);
+            return {
+                status: httpStatus.OK,
+                user: {
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                },
+            };
+        } catch (error) {
+            return {
+                status: error.status ? error.status : httpStatus.INTERNAL_SERVER_ERROR,
+                message: error.message,
+            }
+        }
+    }
+
 }
 
 

@@ -2,6 +2,15 @@ import User from "../model/User.js";
 
 class UserRepository {
 
+    async create(user) {
+        try {
+            return await User.create(user);
+        } catch (err) {
+            console.error(err.message);
+            return null;
+        }
+    }
+
     async findByEmail(email) {
         try {
             return await User.findOne({

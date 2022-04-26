@@ -12,6 +12,12 @@ class UserController {
 
         return res.status(user.status).json(user);
     }
+
+    async create(req, res) {
+        let user = await UserService.create(req);
+
+        return res.status(user.status).json(user);
+    }
 }
 
 export default new UserController();
