@@ -3,6 +3,8 @@ import jwt from "jsonwebtoken";
 import * as httpStatus from "../../../config/utils/HttpStatus.js"
 import * as secret from "../../../config/utils/secrets.js";
 import UserValidations from "../../../config/utils/UserValidations.js";
+import UserException from "../exception/UserException.js";
+import * as HttpStatus from "../../../config/utils/HttpStatus.js"
 
 class UserService {
 
@@ -59,7 +61,17 @@ class UserService {
 
     async create(req) {
         try {
-            let user = await UserRepository.create(req.body);
+
+            const { email } = req.body;
+            const isValid = await UserValidations.validateUserEmailByExternalApi(email);
+            let user;
+            if(isValid){
+                user = await UserRepository.create(req.body);        
+            }
+            else {
+                throw new UserException(HttpStatus.NOT_ACCPTABLE, "Email has a invalid format");
+            }
+        
             return {
                 status: httpStatus.OK,
                 user: {
